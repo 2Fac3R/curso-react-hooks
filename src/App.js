@@ -1,12 +1,14 @@
 import './App.css';
-import Characters from './components/Characters';
 import Header from './components/Header';
+import Characters from './components/Characters';
+import Quotes from './components/Quotes';
 
 function App() {
   return (
     <div className="App">
       <Header />
-      <Characters />    
+      <Characters />
+      <Quotes />    
     </div>
   );
 }
