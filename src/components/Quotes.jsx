@@ -13,10 +13,10 @@ const Quotes = () => {
     <div className='quotes'>
       <h2>Quotes</h2>
       {quotes.map(quote => (
-        <>
-          <p key={quote.id}>{quote.character}</p>
+        <div className="quotes-item" key={quote.id}>
+          <p>{quote.character}</p>
           <q>{quote.quote}</q>
-        </>
+        </div>
       ))}
     </div>
   )
