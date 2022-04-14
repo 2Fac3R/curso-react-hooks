@@ -7,7 +7,7 @@ const initialState = {
 
 const favoriteReducer = (state, action) => {
   switch (action.type) {
-    case 'ADD_TO_FAVORITE':
+    case 'ADD_TO_FAVORITES':
       return {
         ...state,
         favorites: [...state.favorites, action.payload]
@@ -33,7 +33,7 @@ const Characters = () => {
   }, [])
 
   const handleClick = favorite => {
-    dispatch({ type: 'ADD_TO_FAVORITE', payload: favorite })
+    dispatch({ type: 'ADD_TO_FAVORITES', payload: favorite })
   }
 
   // const handleSearch = (event) => {
