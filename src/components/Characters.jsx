@@ -1,25 +1,17 @@
-import React, { useState, useEffect, useReducer, useMemo, useRef, useCallback } from 'react'
+import React, {
+  useState, useEffect, useReducer, useMemo, useRef, useCallback,
+} from 'react';
+
+import { favoriteReducer } from '../reducers/favoriteReducer';
+import { ADD_TO_FAVORITES } from '../actions/favoriteTypes';
+
 import Search from './Search';
 
 const initialState = {
-  favorites: []
-}
+  favorites: [],
+};
 
-const favoriteReducer = (state, action) => {
-  switch (action.type) {
-    case 'ADD_TO_FAVORITES':
-      return {
-        ...state,
-        favorites: [...state.favorites, action.payload]
-      };
-      // eslint-disable-next-line
-      break;
-    default:
-      return state;
-  }
-}
-
-const Characters = () => {
+export default function Characters() {
   const [characters, setCharacters] = useState([]);
   const [favorites, dispatch] = useReducer(favoriteReducer, initialState);
   const [search, setSearch] = useState('');
@@ -27,14 +19,11 @@ const Characters = () => {
 
   useEffect(() => {
     fetch('https://rickandmortyapi.com/api/character')
-      .then(response => response.json())
-      .then(data => setCharacters(data.results));
-    // eslint-disable-next-line
-  }, [])
+      .then((response) => response.json())
+      .then((data) => setCharacters(data.results));
+  }, []);
 
-  const handleClick = favorite => {
-    dispatch({ type: 'ADD_TO_FAVORITES', payload: favorite })
-  }
+  const handleClick = (favorite) => dispatch({ type: ADD_TO_FAVORITES, payload: favorite });
 
   // const handleSearch = (event) => {
   //   setSearch(event.target.value);
@@ -46,28 +35,24 @@ const Characters = () => {
 
   const handleSearch = useCallback(() => {
     setSearch(searchInput.current.value);
-  }, [])
-
+  }, []);
 
   // const filteredCharacters = characters.filter((character) => {
   //   return character.name.toLowerCase().includes(search.toLowerCase());
   // })
 
-  const filteredCharacters = useMemo(() =>
-    characters.filter((character) => {
-      return character.name.toLowerCase().includes(search.toLowerCase());
-    }),
-    [characters, search]
-  )
+  const filteredCharacters = useMemo(() => characters.filter(
+    (character) => character.name.toLowerCase().includes(search.toLowerCase()),
+  ), [characters, search]);
 
   return (
-    <div className='Characters'>
+    <div className="Characters">
       <h2>Characters</h2>
 
       <h3>My favorites:</h3>
-      {favorites.favorites.map(favorite => (
-        <div className="favorites-item">
-          <li key={favorite.id}>
+      {favorites.favorites.map((favorite) => (
+        <div className="favorites-item" key={favorite.id}>
+          <li>
             {favorite.name}
           </li>
         </div>
@@ -75,7 +60,7 @@ const Characters = () => {
 
       <Search search={search} searchInput={searchInput} handleSearch={handleSearch} />
 
-      {filteredCharacters.map(character => (
+      {filteredCharacters.map((character) => (
         <div className="items" key={character.id}>
           <p>{character.name}</p>
           <button
@@ -87,7 +72,5 @@ const Characters = () => {
         </div>
       ))}
     </div>
-  )
+  );
 }
-
-export default Characters;
